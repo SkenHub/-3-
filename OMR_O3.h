@@ -8,15 +8,21 @@
 #ifndef OMR_O3_H_
 #define OMR_O3_H_
 
-double* Vo[3];
+//double* Vo[3];
+#include "sken_library/include.h"
+#include "sken_lib/lib_include.h"
 
 
-
-class O3_Read{
-	double a,V1y,V2x,V3y,V3x,V1z,V2z;
+class O3{
+	Enc encoder[3];
+	static Encoder_data Data[3];
+	double omuni_vol_01,omuni_vol_02,omuni_vol_03;
     double V[3];
+    static void encode_interrupt();
+    Pin pin;
 public:
-	O3_Read(void);
+	O3();
+	void vol(Pin Aomuni_a_pin,Pin Aomuni_b_pin,TimerNumber Aomuni_timer,Pin Bomuni_a_pin,Pin Bomuni_b_pin,TimerNumber Bomuni_timer,Pin Comuni_a_pin,Pin Comuni_b_pin,TimerNumber Comuni_timer);
 	void init(double bodyR,double wheelR);
 	double *read(double V1,double V2,double V3);
 };

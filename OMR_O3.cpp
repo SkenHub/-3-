@@ -4,42 +4,30 @@
  *  Created on: 2022/11/27
  *      Author: Owner
  */
-#include <OMR_O3.h>
+#include "OMR_O3.h"
 #include "math.h"
+/*Enc encoder[3];
+Encoder_data Data[3];*/
 #define PI 3.14159265359
+	O3::O3(){}
 
-float R,L;
+    void O3::encode_interrupt(){
+    encoder[0].interrupt(&Data[0]);
+    encoder[1].interrupt(&Data[1]);
+    encoder[2].interrupt(&Data[2]);
+    }
 
-void O3_Read::init(double bodyR,double wheelR){
-	R = bodyR;
-	L = wheelR;
-};
+    //encoderの初期設定の為，引数が必要．
+void O3::vol(Pin Aomuni_a_pin,Pin Aomuni_b_pin,TimerNumber Aomuni_timer,Pin Bomuni_a_pin,Pin Bomuni_b_pin,TimerNumber Bomuni_timer,Pin Comuni_a_pin,Pin Comuni_b_pin,TimerNumber Comuni_timer){
+	sken_system.init();
+	encoder[0].init(Aomuni_a_pin,Aomuni_b_pin,Aomuni_timer,50);
+	encoder[1].init(Bomuni_a_pin,Bomuni_b_pin,Bomuni_timer,50);
+	encoder[2].init(Comuni_a_pin,Comuni_b_pin,Comuni_timer,50);
+	sken_system.addTimerInterruptFunc(encode_interrupt,0,1);
 
-double *O3_Read::read(double V1,double V2,double V3){
-	V1y = V1-V2;
-	V3y = V2-V2;
-	V1z = V1-V3;
-	V2z = V2-V3;
-	V2x = V2-V1;
-	V3x = V3-V1;
-if(V1==V2 && V1==V3){
-	V[2] = V1/R;
-	V[0] = 0;
-	V[1] = 0;
-}else if(V1<=V2 && V1<=V3){
-	V[2] = (double)V1;
-	V[0] = V2x * sin(a-(1.0/3.0)*PI) + V3x * sin(a+(1.0/3.0)*PI);
-	V[1] = V2x * cos(a-(1.0/3.0)*PI) + V3x * cos(a+(1.0/3.0)*PI);
-}else if(V2<=V1 && V2<=V3){
-	V[2] = (double)V2;
-	V[0] = V1y * sin(a+PI) + V3y * sin(a+(1.0/3.0)*PI);
-	V[1] = V1y * cos(a+PI) + V3y * cos(a+(1.0/3.0)*PI);
-}else if(V3<=V1 && V3<=V2){
-	V[2] = (double)V3;
-	V[0] = V1z * sin(a+PI) + V2z * sin(a-(1.0/3.0)*PI);
-	V[1] = V1z * cos(a+PI) + V2z * cos(a-(1.0/3.0)*PI);
+	while(true){
+		omuni_vol_01 = Data[0].volcity;
+		omuni_vol_02 = Data[1].volcity;
+		omuni_vol_03 = Data[2].volcity;
+	}
 }
-	return &V[0];
-}
-
-
