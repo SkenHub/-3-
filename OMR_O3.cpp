@@ -5,7 +5,6 @@
  *      Author: Owner
  */
 #include "OMR_O3.h"
-#include "math.h"
 /*Enc encoder[3];
 Encoder_data Data[3];*/
 #define PI 3.14159265359
