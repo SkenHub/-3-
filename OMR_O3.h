@@ -23,7 +23,7 @@ class O3{
     Pin pin;
 public:
 	O3();
-	void interrupt_prot(Encoder_data omuni_01_data,Encoder_data omuni_02_data,Encoder_data omuni_03_data);
+	void interrupt_prot(Encoder_data* omuni_01_data,Encoder_data* omuni_02_data,Encoder_data* omuni_03_data);
 	void vol(Pin Aomuni_a_pin,Pin Aomuni_b_pin,TimerNumber Aomuni_timer,Pin Bomuni_a_pin,Pin Bomuni_b_pin,TimerNumber Bomuni_timer,Pin Comuni_a_pin,Pin Comuni_b_pin,TimerNumber Comuni_timer);
 	void init(double bodyR,double wheelR);
 	double *read(double V1,double V2,double V3);
