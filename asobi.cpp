@@ -25,7 +25,7 @@
 
 	void encode_interrupt()
 	{
-	red.interrupt_prot(Data_prot[0],Data_prot[1],Data_prot[2]);
+	red.interrupt_prot(&Data_prot[0],&Data_prot[1],&Data_prot[2]);
 	}
 
 int main(void)
@@ -36,7 +36,7 @@ int main(void)
 	sken_system.addTimerInterruptFunc(encode_interrupt,0,1);
 	while(true)
 	{
-		a = Data_prot[0].deg;
+		a = Data_prot[1].deg;
 	}
 
     }
